@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 import requests
-import optparse
+import argparse
 from time import sleep
 from bs4 import BeautifulSoup
 
@@ -17,49 +17,55 @@ class Main:
 
     def get_args(self):
         try:
-            parser = optparse.OptionParser()
-            parser.add_option(
-                "-G", "--google", dest="google", help="Google search", action="store_true"
+            parser = argparse.ArgumentParser()
+            group = parser.add_mutually_exclusive_group()
+            group.add_argument(
+                "-G",
+                "--google",
+                dest="google",
+                help="Google search",
+                action="store_true",
             )
-            parser.add_option(
+            group.add_argument(
                 "-B", "--bing", dest="bing", help="Bing search", action="store_true"
             )
-            parser.add_option("-d", "--domain", dest="domain", help="Domain to search")
-            parser.add_option(
+            parser.add_argument(
+                "-d", "--domain", dest="domain", help="Domain to search", type=str
+            )
+            parser.add_argument(
                 "-p",
                 "--page",
                 dest="page",
-                help="How many pages to search [ Default = 1 page ]",
+                help="How many pages to search (optional) ",
                 type=int,
             )
-            (options, _) = parser.parse_args()
-
-            if options.google or options.bing and options.domain or options.page:
-                if options.page:
-                    for i in range(1, (options.page + 1)):
-                        if options.google:
-                            self.google(i, options.domain)
+            arg = parser.parse_args()
+            if arg.google or arg.bing and arg.domain or arg.page:
+                if arg.page:
+                    for i in range(1, (arg.page + 1)):
+                        if arg.google:
+                            self.google(i, arg.domain)
                             sleep(2)
-                        if options.bing:
-                            self.bing(i, options.domain)
+                        if arg.bing:
+                            self.bing(i, arg.domain)
                             sleep(2)
-                    if options.google:
-                        self.google_subdomains(options.domain)
-                    if options.bing:
-                        self.bing_subdomains(options.domain)
+                    if arg.google:
+                        self.google_subdomains(arg.domain)
+                    if arg.bing:
+                        self.bing_subdomains(arg.domain)
                 else:
                     page = 2
                     for i in range(1, page):
-                        if options.google:
-                            self.google(i, options.domain)
+                        if arg.google:
+                            self.google(i, arg.domain)
                             sleep(2)
-                        if options.bing:
-                            self.bing(i, options.domain)
+                        if arg.bing:
+                            self.bing(i, arg.domain)
                             sleep(2)
-                    if options.google:
-                        self.google_subdomains(options.domain)
-                    if options.bing:
-                        self.bing_subdomains(options.domain)
+                    if arg.google:
+                        self.google_subdomains(arg.domain)
+                    if arg.bing:
+                        self.bing_subdomains(arg.domain)
             else:
                 parser.error("Use -h/--help for more info.")
         except TypeError:
