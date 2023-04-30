@@ -4,6 +4,7 @@ import requests
 import argparse
 from time import sleep
 from bs4 import BeautifulSoup
+from user_agent import generate_user_agent
 
 
 class Main:
@@ -14,6 +15,7 @@ class Main:
         self.bingUrl: str = "https://www.bing.com/search?&count=100&q="
         self.googleUrl: str = "https://www.google.com/search?num=100&filter=0&q="
         self.dork: str = "site%3A"
+        self.headers = {"User-Agent": generate_user_agent()}
 
     def get_args(self):
         try:
@@ -74,7 +76,7 @@ class Main:
     def bing(self, page, domain):
         target = f"{self.bingUrl}{self.dork}{domain}&first={100*(page-1)+1}"
         try:
-            response = requests.get(target)
+            response = requests.get(target, headers=self.headers)
             soup = BeautifulSoup(response.text, "lxml")
             result = soup.findAll("li", class_="b_algo")
             for links in result:
@@ -87,6 +89,7 @@ class Main:
         target = f"{self.googleUrl}{self.dork}{domain}&start={20*(page-1)}"
         try:
             response = requests.get(target)
+            print(response.text)
             soup = BeautifulSoup(response.text, "lxml")
             result = soup.findAll("div")
             for links in result:
