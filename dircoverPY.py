@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 import requests
-import sys
+import optparse
 from time import sleep
 from bs4 import BeautifulSoup
 
@@ -14,6 +14,56 @@ class Main:
         self.bingUrl: str = "https://www.bing.com/search?&count=100&q="
         self.googleUrl: str = "https://www.google.com/search?num=100&filter=0&q="
         self.dork: str = "site%3A"
+
+    def get_args(self):
+        try:
+            parser = optparse.OptionParser()
+            parser.add_option(
+                "-G", "--google", dest="google", help="Google search", action="store_true"
+            )
+            parser.add_option(
+                "-B", "--bing", dest="bing", help="Bing search", action="store_true"
+            )
+            parser.add_option("-d", "--domain", dest="domain", help="Domain to search")
+            parser.add_option(
+                "-p",
+                "--page",
+                dest="page",
+                help="How many pages to search [ Default = 1 page ]",
+                type=int,
+            )
+            (options, _) = parser.parse_args()
+
+            if options.google or options.bing and options.domain or options.page:
+                if options.page:
+                    for i in range(1, (options.page + 1)):
+                        if options.google:
+                            self.google(i, options.domain)
+                            sleep(2)
+                        if options.bing:
+                            self.bing(i, options.domain)
+                            sleep(2)
+                    if options.google:
+                        self.google_subdomains(options.domain)
+                    if options.bing:
+                        self.bing_subdomains(options.domain)
+                else:
+                    page = 2
+                    for i in range(1, page):
+                        if options.google:
+                            self.google(i, options.domain)
+                            sleep(2)
+                        if options.bing:
+                            self.bing(i, options.domain)
+                            sleep(2)
+                    if options.google:
+                        self.google_subdomains(options.domain)
+                    if options.bing:
+                        self.bing_subdomains(options.domain)
+            else:
+                parser.error("Use -h/--help for more info.")
+        except TypeError:
+            parser.error("Use -h/--help for more info.")
 
     def bing(self, page, domain):
         target = f"{self.bingUrl}{self.dork}{domain}&first={100*(page-1)+1}"
@@ -97,45 +147,4 @@ class Main:
 
 if __name__ == "__main__":
     run = Main()
-    try:
-        if sys.argv[1] == "-h" or sys.argv[1] == "--help":
-            print(
-                "dircoverPY.py\n\tUsage: python3 dircoverPY.py -h\
-                \n\tUsage: python3 dircoverPY.py -G -d google.com",
-                "\n\nOptions:",
-            )
-            print(
-                "\t-G\t\t Using Google Search Engine\n",
-                "\t-B\t\t Using Bing Search Engine",
-            )
-            print("\t-d\t\t Domain\n", "\t-p\t\t Number of pages")
-        elif (
-            sys.argv[1] == "-G"
-            or sys.argv[1] == "-B"
-            and sys.argv[2] == "-d"
-            or sys.argv[4]
-        ):
-            try:
-                if sys.argv[4]:
-                    for i in range(1, int(sys.argv[5])):
-                        if sys.argv[1] == "-G":
-                            run.google(i, sys.argv[3])
-                            run.google_subdomains(sys.argv[3])
-                            sleep(2)
-                        if sys.argv[1] == "-B":
-                            run.bing(i, sys.argv[3])
-                            run.bing_subdomains(sys.argv[3])
-                            sleep(2)
-            except IndexError:
-                page = 2
-                for i in range(1, page):
-                    if sys.argv[1] == "-G":
-                        run.google(i, sys.argv[3])
-                        run.google_subdomains(sys.argv[3])
-                        sleep(2)
-                    if sys.argv[1] == "-B":
-                        run.bing(i, sys.argv[3])
-                        run.bing_subdomains(sys.argv[3])
-                        sleep(2)
-    except IndexError:
-        print("dircoverPY.py\n\tUsage: python3 dircoverPY.py -h")
+    run.get_args()
