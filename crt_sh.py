@@ -36,7 +36,9 @@ def parse_args():
             for subdomain in crt_result:
                 with open(".raw_data.txt", "a") as raw:
                     raw.write(subdomain + "\n")
-            os.system("cat .raw_data.txt | sort -u > .sorted_data.txt && rm .raw_data.txt")
+            os.system(
+                "cat .raw_data.txt | sort -u > .sorted_data.txt && rm .raw_data.txt"
+            )
 
             result = []
             with open(".sorted_data.txt", "r") as sorted_data:
