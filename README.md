@@ -1,5 +1,6 @@
 # EHT
-This repo contains tools to make your life easy and aslo for pentesting
+
+## This repo contains tools to make your life easy and aslo for pentesting
 
 - crt-sh.py
 
@@ -7,12 +8,12 @@ This repo contains tools to make your life easy and aslo for pentesting
 
 - dircoverPY.py
 
-``` Uses dork in google and bing search engine to find subdomains and paths. ```
+`Uses dork in google and bing search engine to find subdomains and paths.`
 
 - Hfind.py
 
-``` Separetes http and https URLs from a file and returns them in a different files. ``` 
+`Separetes http and https URLs from a file and returns them in a different files.` 
 
 - ip-space.py
 
-``` Uses ASN(Autonomous System Number) to get the ip-ranges of an organizations. ```
+`Uses ASN(Autonomous System Number) to get the ip-ranges of an organizations.`
