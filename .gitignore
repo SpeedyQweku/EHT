@@ -3,3 +3,5 @@ fooo.py
 foo1.py
 foo2.py
 test.py
+*.txt
+*.json
