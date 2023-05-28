@@ -10,9 +10,9 @@
 
 `Uses dork in google and bing search engine to find subdomains and paths.`
 
-- Hfind.py
+- wfinder.py
 
-`Separetes http and https URLs from a file and returns them in a different files.` 
+`Returns the line starting/ending with the specified string from a file.` 
 
 - ip-space.py
 
