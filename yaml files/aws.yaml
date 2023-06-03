@@ -1,0 +1,60 @@
+name: "aws pattern"
+desc: "grep for aws pattern"
+risk: "Info"
+leve: 4
+rules:
+  - id: aws-s3-01
+    reason: "S3 bucket"
+    detections:
+      - >-
+        RegexSearch("response", "[a-z0-9.-]+\\.s3\\.amazonaws\\.com")
+      - >-
+        RegexSearch("response", "[a-z0-9.-]+\\.s3-[a-z0-9-]\\.amazonaws\\.com")
+      - >-
+        RegexSearch("response", "[a-z0-9.-]+\\.s3-website[.-](eu|ap|us|ca|sa|cn)")
+      - >-
+        RegexSearch("response", "//s3\\.amazonaws\\.com/[a-z0-9._-]+")
+      - >-
+        RegexSearch("response", "//s3-[a-z0-9-]+\\.amazonaws\\.com/[a-z0-9._-]+")
+
+  - id: aws-01
+    reason: "AWS Key"
+    detections:
+      - >-
+        RegexSearch("response", '([^A-Z0-9]|^)(AKIA|A3T|AGPA|AIDA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{12,}')
+
+  - id: aws-02
+    reason: "AWS Manager ID"
+    detections:
+      - >-
+        RegexSearch("response", '(A3T[A-Z0-9]|AKIA|AGPA|AIDA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{16}')
+
+  - id: aws-03
+    reason: "AWS Manager ID"
+    detections:
+      - >-
+        RegexSearch("response", '(?i)(aws_access_key_id|aws_secret_access_key)(.{0,20})?=.[0-9a-zA-Z\/+]{20,40}')
+
+  - id: aws-04
+    reason: "AWS Account ID"
+    detections:
+      - >-
+        RegexSearch("response", "((\\\"|'|`)?((?i)aws)?_?((?i)account)_?((?i)id)?(\\\"|'|`)?\\\\s{0,50}(:|=>|=)\\\\s{0,50}(\\\"|'|`)?[0-9]{4}-?[0-9]{4}-?[0-9]{4}(\\\"|'|`)?)")
+
+  - id: aws-05
+    reason: "AWS Secret Access Key"
+    detections:
+      - >-
+        RegexSearch("response", "((\\\"|'|`)?((?i)aws)?_?((?i)secret)_?((?i)access)?_?((?i)key)?_?((?i)id)?(\\\"|'|`)?\\\\s{0,50}(:|=>|=)\\\\s{0,50}(\\\"|'|`)?[A-Za-z0-9/+=]{40}(\\\"|'|`)?)")
+
+  - id: aws-06
+    reason: "AWS Session Token"
+    detections:
+      - >-
+        RegexSearch("response", "((\\\"|'|`)?((?i)aws)?_?((?i)session)?_?((?i)token)?(\\\"|'|`)?\\\\s{0,50}(:|=>|=)\\\\s{0,50}(\\\"|'|`)?[A-Za-z0-9/+=]{16,}(\\\"|'|`)?)")
+
+  - id: aws-07
+    reason: "Amazon MWS Auth Token"
+    detections:
+      - >-
+        RegexSearch("response", "amzn\\.mws\\.[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}")

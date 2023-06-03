@@ -1,0 +1,49 @@
+name: "common pattern"
+desc: "grep for common interesting pattern"
+risk: "Info"
+leve: 4
+rules:
+  - id: secret-common-01
+    reason: "Common Secret"
+    detections:
+      - >-
+        RegexSearch("response", '(?i)aws_access|aws_secret|api[_-]?key|listbucketresult|s3_access_key|authorization:|ssh-rsa AA|pass(word)?|secret|token')
+
+  - id: sensitive-ip-01
+    reason: "IP detected in JS file"
+    detections:
+      # only grep IP in javascript file
+      - >-
+        StatusCode() == 200 && (StringSearch('response','Content-Type: application/javascript') || StringSearch('response','Content-Type: text/javascript'))&& RegexSearch("response", "(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])")
+
+  - id: sensitive-json-01
+    reason: "Sensitive JSON detected"
+    detections:
+      - >-
+        RegexSearch("body", "(\\\\?\"|&quot;|%22)[a-z0-9_-]*(api[_-]?key|S3|aws_|secret|passw|auth)[a-z0-9_-]*(\\\\?\"|&quot;|%22): ?(\\\\?\"|&quot;|%22)[^\"&]+(\\\\?\"|&quot;|%22)")
+
+  - id: sensitive-comment-01
+    reason: "Suspicious Comments"
+    detections:
+      - >-
+        RegexSearch("body", "(?i)\\b(hack|hax|fix|oo+ps|fuck|ugly|todo|shit)\\b")
+
+  - id: sensitive-xml-01
+    reason: "Secret in XML"
+    detections:
+      - >-
+        RegexSearch("body", "(?im)<\\s*[a-z-_]*(apikey|api_key|secret|password)[a-z-_]*>.{4,100}</\\s*[a-z-_]*(apikey|api_key|secret|password)[a-z-_]*>")
+
+  - id: sensitive-common-01
+    reason: "Sensitive Generic pattern"
+    detections:
+      - >-
+        RegexSearch("body", "(?i)token[\\w-]*\\s*[=:>|]+\\s*['\"`][^'\"`]{3,100}['\"`]")
+      - >-
+        RegexSearch("body", "(?i)secret[\\w-]*\\s*[=:>|]+\\s*['\"`][^'\"`]{3,100}['\"`]")
+      - >-
+        RegexSearch("body", "(?i)pass(word)?[\\w-]*\\\\s*[=:>|]+\\s*['\"`][^'\"`]{3,100}['\"`]")
+      - >-
+        RegexSearch("body", "sshpass -p.*['|\\\"]")
+      - >-
+        RegexSearch("body", "LS0tLS1CRUdJT[%a-zA-Z0-9+/]+={0,2}")
