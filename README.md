@@ -24,4 +24,4 @@
 
 - g-subfinder.py
 
-`Uses three api to gather subdomains`
+`Uses three api to gather subdomains.`
