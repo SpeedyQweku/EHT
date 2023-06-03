@@ -17,3 +17,11 @@
 - ip-space.py
 
 `Uses ASN(Autonomous System Number) to get the ip-ranges of an organizations.`
+
+- vulnsearch.py
+
+`Uses yaml file that contains ragex rules to find vulnerabilities in a site.`
+
+- g-subfinder.py
+
+`Uses three api to gather subdomains`
