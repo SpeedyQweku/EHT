@@ -1,7 +1,9 @@
+#!/usr/bin/python3
+
 import requests
+import argparse
 from os import system
 from bs4 import BeautifulSoup
-import argparse
 
 
 class GsubFinder:
