@@ -28,4 +28,5 @@
 
 - g-subfinder
 
-`Uses three api to gather subdomains.`
+`Uses four api to gather subdomains. but you have to sign up to securitytrails.com to get their apikey.`
+`You can use this apikey for now 'tq70qGeu6PSNpRnRVMrg5Qs1YJmBfmvM'`
