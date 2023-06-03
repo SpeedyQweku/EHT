@@ -1,6 +1,6 @@
 # EHT
 
-## This repo contains tools to make your life easy and aslo for pentesting
+## This repo contains tools to make your life easy and also for pentesting
 
 ### Installing tools
 
