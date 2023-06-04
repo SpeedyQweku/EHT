@@ -8,7 +8,7 @@
 
 - crt-sh
 
-`Uses crt.sh to get subdomains. It can return the subdomain with wildcard infront ony, subdomain without wildcard only and also both of than together.`
+`Uses crt.sh to get subdomains. It can return the subdomain with wildcard infront only, subdomain without wildcard only and also both of them together.`
 
 - dircoverPY
 
