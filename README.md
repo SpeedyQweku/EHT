@@ -30,3 +30,7 @@
 
 `Uses four api to gather subdomains. but you have to sign up to securitytrails.com to get their apikey.`
 `You can use this apikey for now 'tq70qGeu6PSNpRnRVMrg5Qs1YJmBfmvM'`
+
+- swagger-scanner
+
+`This tool checks if the given Url/File has Swagger UI, That can be tested later for Dom XSS....`
