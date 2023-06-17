@@ -10,7 +10,7 @@
 
 `Uses crt.sh to get subdomains. It can return the subdomain with wildcard infront only, subdomain without wildcard only and also both of them together.`
 
-- dircoverPY
+- discoverPY
 
 `Uses dork in google and bing search engine to find subdomains and paths.`
 
