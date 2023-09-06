@@ -34,3 +34,11 @@
 - swagger-scanner
 
 `This tool checks if the given Url/File has Swagger UI, That can be tested later for Dom XSS....`
+
+- domain-checker
+
+`Uses http and https protocols on the domains and check if it's dead or live.`
+
+- web_archive
+
+`Uses web.archive.org to gather urls for a domain`
