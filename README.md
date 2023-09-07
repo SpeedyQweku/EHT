@@ -16,7 +16,7 @@
 
 - wfinder
 
-`Returns the line starting/ending with the specified string from a file.` 
+`Returns the line starting/ending with the specified string from a file.`
 
 - ip-space
 
