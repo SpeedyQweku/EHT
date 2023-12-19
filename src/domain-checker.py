@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import httpx
 import asyncio
 import argparse
