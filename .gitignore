@@ -3,6 +3,5 @@ test.py
 *.txt
 *.json
 work/
-src
 build
 dist
