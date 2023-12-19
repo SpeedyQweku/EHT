@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import httpx
 import asyncio
 import argparse
@@ -11,13 +13,18 @@ async def swagger(url: str):
         response = await client.get(url)
         if response.status_code == 200:
             soup = BeautifulSoup(response.text, "lxml")
-            title = soup.title.text
-            print(title)
+            title_tag = soup.title
+            if title_tag:
+                title = title_tag.text
+                print(title)
             if "Swagger" in title or "swagger" in title:
                 print(colored("\t[+] Swagger UI Detected At : " + url, "blue"))
                 swagger_url.append(url)
             else:
                 print(colored("[!] No Swagger UI Detected At : " + url, "red"))
+            if "openapi: 3." in response.text or "swagger: 2." in response.text or "Swagger UI" in response.text:
+                print(colored("\t[+] Swagger UI Detected At : " + url, "blue"))
+                swagger_url.append(url)
             return swagger_url
         else:
             print(colored(f"[!] Status code : {response.status_code} at" + url, "red"))
